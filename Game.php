@@ -49,12 +49,13 @@ class Game extends Command
             if ($this->hero->getStats('health') <= 0 || $this->beast->getStats('health') <= 0) {
                 print "\e[31mGame Over\e[0m \n";
                 print $this->hero->getStats('health') <= 0 ? 'Beast Won' : 'Hero Won';
-                break;
+                return Command::SUCCESS;
             }
 
             sleep(1);
         }
 
+        print $this->hero->getStats('health') > $this->beast->getStats('health') ? 'Hero Won' : 'Beast Won';
         return Command::SUCCESS;
 
     }

@@ -66,15 +66,23 @@ trait GameTrait {
             }
         }
 
-        if (isset($attackerLessStrength)) {
+        if (isset($attackerLessStrength) || isset($attackerSkillStrength)) {
             $attackerSkillStrength = isset($attackerSkillStrength) ? $attackerSkillStrength : 0;
-            $attackerTotalStrength = ($attackerBasicStrength + $attackerSkillStrength) - $attackerLessStrength;
+
+            // calculate total strength with or without skill
+            if (isset($attackerLessStrength)) {
+                $attackerTotalStrength = ($attackerBasicStrength + $attackerSkillStrength) - $attackerLessStrength;
+            } elseif (isset($attackerSkillStrength)) {
+                $attackerTotalStrength = $attackerBasicStrength + $attackerSkillStrength;
+            }
+
             $attackerTotalStrength = $attackerTotalStrength < 0 ? 0 : $attackerTotalStrength;
 
             $damageLog = ucfirst($defender) . " a folosit \e[31m" . $defenderSkill['name'] . "\e[0m \n";
         } else {
             $attackerTotalStrength = $attackerBasicStrength;
         }
+
         $damage = $this->calculateDamage($attackerTotalStrength, $defenderBasicDefence);
         $this->$defender->receiveDamage($damage);
         $damageLog .= ucfirst($attacker) . " a dat \e[31m" . $damage . "\e[0m damage in " . ucfirst($defender) . "\n";
