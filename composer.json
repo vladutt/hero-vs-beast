@@ -1,0 +1,9 @@
+{
+  "require" :{
+    "symfony/console": "^5.0",
+    "php": "^7.3.0"
+  },
+  "autoload": {
+    "classmap": ["Game.php", "Classes", "Traits"]
+  }
+}
